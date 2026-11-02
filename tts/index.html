@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MultiTTSBOT 使い方</title>
+<meta name="description" content="Discord の読み上げBOT「MultiTTSBOT」の使い方とコマンド一覧です。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+<header>
+  <h1>MultiTTSBOT</h1>
+  <p class="lead">チャンネルの発言を、Discord の VC で読み上げる BOT です。声は VOICEROID2・A.I.VOICE・VOICEVOX・CeVIO から、一人ずつ選べます。</p>
+</header>
+
+<nav class="toc" aria-label="目次">
+  <a href="#start">はじめ方</a>
+  <a href="#voice">声を変える</a>
+  <a href="#reading">読み方</a>
+  <a href="#dict">辞書</a>
+  <a href="#commands">コマンド一覧</a>
+  <a href="#faq">困ったとき</a>
+</nav>
+
+<section id="start">
+  <h2>はじめ方</h2>
+  <ol class="steps">
+    <li><b>VC に入る</b><span>先に自分が読み上げてほしい VC に入ります。</span></li>
+    <li><b>読み上げたいチャンネルで <code>/join</code></b><span>コマンドを打ったチャンネルの発言を読み上げます。</span></li>
+    <li><b>発言する</b><span>同じ VC にいる人の発言を、順番に読み上げます。</span></li>
+    <li><b>終わったら <code>/leave</code></b><span>VC から人がいなくなったときは、自動で抜けます。</span></li>
+  </ol>
+</section>
+
+<section id="voice">
+  <h2>声を変える</h2>
+  <p>最初に発言すると声が自動で決まり、そのあとは同じ声で読みます。好きな声にしたいときは、次のコマンドを使います。設定は一人ずつ保存されます。</p>
+  <dl class="cmds">
+    <div><dt><code>/voices</code></dt><dd>使える声の一覧を見ます。エンジンで絞り込めます。</dd></div>
+    <div><dt><code>/voice ずんだ</code></dt><dd>声を変えます。名前の一部を入力すると候補が出ます。何も入れないと、今の設定を表示します。</dd></div>
+    <div><dt><code>/tune speed:1.2 pitch:0.9</code></dt><dd>速さと高さを変えます。どちらも 0.5〜2.0 で、1.0 が標準です。</dd></div>
+    <div><dt><code>/test</code></dt><dd>今の声で試しに読み上げます。先に <code>/join</code> が必要です。</dd></div>
+  </dl>
+</section>
+
+<section id="reading">
+  <h2>読み方</h2>
+  <p>発言は、次のように整えてから読み上げます。</p>
+  <table>
+    <thead><tr><th>発言の内容</th><th>読み方</th></tr></thead>
+    <tbody>
+      <tr><td><code>;</code> <code>；</code> <code>//</code> <code>/</code> で始まる発言</td><td>読みません</td></tr>
+      <tr><td>URL</td><td>「ユーアールエル」</td></tr>
+      <tr><td>コードブロック</td><td>「コード省略」</td></tr>
+      <tr><td>スポイラー（<code>||</code> で囲んだ文字）</td><td>「ネタバレ」</td></tr>
+      <tr><td>メンション</td><td>相手の名前、ロール名、チャンネル名</td></tr>
+      <tr><td>絵文字・スタンプ</td><td>読みません</td></tr>
+      <tr><td>添付ファイルだけの発言</td><td>「添付ファイル」</td></tr>
+      <tr><td>同じ文字の連続（<code>wwwwwww</code> など）</td><td>3文字に短くします</td></tr>
+      <tr><td>300文字を超える発言</td><td>300文字まで読んで「以下略」</td></tr>
+    </tbody>
+  </table>
+  <p>読み上げ前に発言を消すと、その発言は読みません。読んでいる途中なら止まります。</p>
+</section>
+
+<section id="dict">
+  <h2>辞書</h2>
+  <p>読み間違える言葉は、辞書に登録すると直せます。辞書はサーバーで共通で、誰でも編集できます。</p>
+  <dl class="cmds">
+    <div><dt><code>/dict_add word:VC reading:ブイシー</code></dt><dd>言葉と読みを登録します。</dd></div>
+    <div><dt><code>/dict_remove word:VC</code></dt><dd>登録を消します。</dd></div>
+    <div><dt><code>/dict_list</code></dt><dd>登録されている言葉を見ます。</dd></div>
+  </dl>
+  <ul class="notes">
+    <li>登録できるのは 500 件までです。言葉は 30 文字まで、読みは 60 文字までです。</li>
+    <li>ひらがな・カタカナ1文字と、記号だけの言葉は登録できません。</li>
+    <li>英数字の言葉は、英単語の途中には当たりません。<code>AI</code> を登録しても <code>MAIN</code> の読みは変わりません。</li>
+  </ul>
+</section>
+
+<section id="commands">
+  <h2>コマンド一覧</h2>
+
+  <h3>読み上げ</h3>
+  <dl class="cmds">
+    <div><dt><code>/join</code></dt><dd>VC に接続して、このチャンネルの読み上げを始めます。</dd></div>
+    <div><dt><code>/leave</code></dt><dd>VC から切断します。</dd></div>
+    <div><dt><code>/skip</code></dt><dd>今の読み上げをスキップします。</dd></div>
+    <div><dt><code>/clear</code></dt><dd>読み上げ待ちを全部消します。</dd></div>
+  </dl>
+
+  <h3>確認</h3>
+  <dl class="cmds">
+    <div><dt><code>/status</code></dt><dd>エンジンの状態と、接続中のサーバー数を見ます。</dd></div>
+    <div><dt><code>/help_read</code></dt><dd>コマンドの一覧を Discord 上で見ます。</dd></div>
+    <div><dt><code>/credit</code></dt><dd>音声エンジンの規約についての案内を見ます。</dd></div>
+  </dl>
+
+  <h3>サーバーの設定 <span class="tag">サーバー管理権限</span></h3>
+  <dl class="cmds">
+    <div><dt><code>/volume percent:100</code></dt><dd>読み上げの音量を 10〜200% で変えます。100 が標準です。</dd></div>
+    <div><dt><code>/readname on:True</code></dt><dd>発言者の名前も読みます。初期設定はオフです。同じ人が続けて発言したときは、60秒間は名前を省きます。</dd></div>
+    <div><dt><code>/announce on:True</code></dt><dd>VC の入退室を読み上げます。初期設定はオフです。</dd></div>
+  </dl>
+</section>
+
+<section id="faq">
+  <h2>困ったとき</h2>
+  <details>
+    <summary>発言を読んでくれない</summary>
+    <p>次の3つを確認してください。</p>
+    <ul>
+      <li>BOT と同じ VC に自分がいる</li>
+      <li><code>/join</code> を打ったチャンネルで発言している</li>
+      <li>発言が <code>;</code> や <code>/</code> で始まっていない</li>
+    </ul>
+    <p>別のチャンネルを読ませたいときは、同じ VC にいる状態で、そのチャンネルでもう一度 <code>/join</code> を打ってください。</p>
+  </details>
+  <details>
+    <summary>「別のVCで使用中です」と出る</summary>
+    <p>BOT は1つのサーバーで同時に1つの VC にしか入れません。今の VC で <code>/leave</code> するか、同じ VC に移動してください。</p>
+  </details>
+  <details>
+    <summary>読み上げが飛ばされた</summary>
+    <p>読み上げ待ちは 20 件までで、超えた分は読みません。読み飛ばしたときは、チャンネルに件数を知らせます。</p>
+  </details>
+  <details>
+    <summary>声が出ない、エラーが出る</summary>
+    <p><code>/status</code> でエンジンの状態を確認してください。「未接続」や「不調」と出ている間は、そのエンジンの声で読めないことがあります。<code>/voice</code> で別のエンジンの声に変えると読める場合があります。</p>
+  </details>
+  <details>
+    <summary>BOT が VC から抜けた</summary>
+    <p>VC に人がいなくなると自動で抜けます。通信の不具合で切れたときは、自動で入り直してチャンネルに知らせます。戻らないときは <code>/join</code> を打ってください。</p>
+  </details>
+</section>
+
+<section id="credit">
+  <h2>クレジットについて</h2>
+  <p>音声エンジンとキャラクターには、それぞれ利用規約があります。VOICEVOX の音声を公開・配信するときは、「VOICEVOX:キャラクター名」のクレジット表記が必要です。公開サーバーで使うときは、各エンジンの規約を確認してください。</p>
+</section>
+</main>
+</body>
+</html>
