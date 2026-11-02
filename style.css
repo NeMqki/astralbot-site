@@ -46,3 +46,8 @@ nav.lang { display: flex; gap: 12px; margin: 0 0 20px; font-size: 0.95rem; }
 nav.lang a { text-decoration: none; padding: 2px 10px; border: 1px solid var(--line); border-radius: 999px; }
 section + section { margin-top: 48px; padding-top: 8px; border-top: 3px double var(--line); }
 footer { margin-top: 32px; color: var(--sub); font-size: 0.85rem; }
+.other-bot { margin: 20px 0 0; padding: 14px 16px; border: 1px solid var(--line); border-radius: 8px; }
+.other-bot p { margin: 0; }
+.other-bot-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px !important; }
+.other-bot-links a { padding: 6px 14px; border: 1px solid var(--accent); border-radius: 999px; font-size: 0.95rem; text-decoration: none; }
+.other-bot-links a:hover { background: var(--accent); color: var(--card); }
