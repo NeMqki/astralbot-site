@@ -115,3 +115,12 @@ td:first-child { width: 55%; }
 details { border-bottom: 1px solid var(--line); }
 summary { padding: 10px 0; cursor: pointer; font-weight: 600; }
 details > :not(summary):last-child { margin-bottom: 12px; }
+
+.crumb { margin: 0 0 12px; font-size: 0.9rem; }
+.selfhost-link {
+  margin: 20px 0 0;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 0.95rem;
+}

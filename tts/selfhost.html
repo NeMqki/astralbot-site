@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>読み上げbot 自分で動かす</title>
+<meta name="description" content="読み上げbotを自分のPCで動かす手順です。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+<header>
+  <p class="crumb"><a href="./">← 使い方に戻る</a></p>
+  <h1>自分で動かす</h1>
+  <p class="lead">読み上げbotのプログラムは <a href="https://github.com/NeMqki/MultiTTSBOT">GitHub</a> で公開しています。自分の BOT として動かせば、自分のサーバーで使えます。動かしている PC の電源が入っている間だけ動きます。</p>
+</header>
+
+<nav class="toc" aria-label="目次">
+  <a href="#need">必要なもの</a>
+  <a href="#install">インストール</a>
+  <a href="#discord">BOT を作る</a>
+  <a href="#config">設定する</a>
+  <a href="#run">起動する</a>
+  <a href="#options">便利な設定</a>
+  <a href="#trouble">困ったとき</a>
+  <a href="#safety">注意</a>
+</nav>
+
+<section id="need">
+  <h2>必要なもの</h2>
+  <ul>
+    <li><b>Windows の PC</b>：VOICEVOX 以外のエンジンは Windows で動かします。</li>
+    <li><b>Python 3.10 以上</b>：<a href="https://www.python.org/downloads/">python.org</a> から入れます。</li>
+    <li><b>FFmpeg</b>：<a href="https://ffmpeg.org/download.html">ffmpeg.org</a> から入れて、PATH を通します。コマンドプロンプトで <code>ffmpeg -version</code> と打って確認できます。</li>
+    <li><b>音声エンジンを1つ以上</b>：VOICEROID2、A.I.VOICE、VOICEVOX、CeVIO のどれかです。無料で試すなら <a href="https://voicevox.hiroshiba.jp/">VOICEVOX</a> が手軽です。エンジンと音声ライブラリは各自で用意してください。</li>
+  </ul>
+</section>
+
+<section id="install">
+  <h2>インストール</h2>
+  <ol class="steps">
+    <li><b>プログラムをダウンロードする</b><span><a href="https://github.com/NeMqki/MultiTTSBOT/archive/refs/heads/main.zip">ZIP をダウンロード</a>して、好きな場所に展開します。</span></li>
+    <li><b>展開したフォルダでコマンドプロンプトを開く</b><span>フォルダのアドレスバーに <code>cmd</code> と入力すると開けます。</span></li>
+    <li><b>必要なものを入れる</b><span><code>pip install -r requirements.txt</code></span></li>
+    <li><b>VOICEROID2 を使うときだけ、追加で入れる</b><span><a href="https://github.com/Nkyoku/pyvcroid2">pyvcroid2</a> は別に入れます。<br><code>pip install https://github.com/Nkyoku/pyvcroid2/archive/refs/heads/master.zip</code></span></li>
+  </ol>
+</section>
+
+<section id="discord">
+  <h2>Discord で BOT を作る</h2>
+  <ol class="steps">
+    <li><b>アプリを作る</b><span><a href="https://discord.com/developers/applications">Developer Portal</a> で「New Application」を押します。</span></li>
+    <li><b>Message Content Intent をオンにする</b><span>「Bot」のページにあります。オフのままだと発言を読めません。</span></li>
+    <li><b>トークンをコピーする</b><span>同じページの「Reset Token」で表示されます。あとで使います。</span></li>
+    <li><b>サーバーに招待する</b><span>「OAuth2」のページで、スコープの <code>bot</code> と <code>applications.commands</code> を選びます。権限は「チャンネルを見る」「メッセージを送信」「接続」「発言」を選びます。できた URL を開いて招待します。</span></li>
+  </ol>
+  <p class="notes">自分のサーバーだけで使うなら、「Bot」のページの「Public Bot」をオフにすると、ほかの人が招待できなくなります。</p>
+</section>
+
+<section id="config">
+  <h2>設定する</h2>
+  <ol class="steps">
+    <li><b><code>token.txt</code> を作る</b><span>プログラムと同じフォルダに作り、トークンを1行だけ書きます。</span></li>
+    <li><b><code>config.txt</code> を作る</b><span><code>config.example.txt</code> をコピーして名前を変えます。</span></li>
+    <li><b><code>config.txt</code> を編集する</b><span>最初は次の2つを設定します。ほかの項目は、ファイルの中の説明を見て必要なら変えてください。</span></li>
+  </ol>
+  <dl class="cmds">
+    <div><dt><code>owner_ids</code></dt><dd>自分の Discord ユーザーID を書きます。ここに書いた人だけが <code>/restart</code> と <code>/presence</code> を使えます。</dd></div>
+    <div><dt><code>engines</code></dt><dd>使うエンジンだけを残します。VOICEVOX だけなら <code>engines = voicevox</code> です。<code>[voice]</code> の <code>random_engines</code> も同じエンジンに変えてください。</dd></div>
+  </dl>
+</section>
+
+<section id="run">
+  <h2>起動する</h2>
+  <ol class="steps">
+    <li><b>音声エンジンを起動する</b><span>VOICEVOX はアプリを起動しておきます。</span></li>
+    <li><b><code>Start.bat</code> をダブルクリックする</b><span>BOT が終了しても自動で起動し直します。止めるときはウィンドウを閉じます。</span></li>
+    <li><b>Discord で <code>/join</code> を打つ</b><span>VC に入ってから打ちます。あとの使い方は<a href="./">使い方のページ</a>を見てください。</span></li>
+  </ol>
+</section>
+
+<section id="options">
+  <h2>便利な設定</h2>
+  <p>どれも <code>config.txt</code> に書きます。変更したら BOT を起動し直してください。</p>
+  <dl class="cmds">
+    <div><dt><code>allowed_guilds</code></dt><dd>入っていてよいサーバーの ID を書きます。それ以外のサーバーからは自動で抜けます。</dd></div>
+    <div><dt><code>auto_resume</code> / <code>auto_rejoin</code></dt><dd>再起動のあとや、通信が切れたあとに、VC へ自動で戻ります。初期設定はオンです。</dd></div>
+    <div><dt><code>log_reads</code> / <code>log_read_text</code></dt><dd>読み上げの記録をログに残すかを決めます。文章そのものを残す <code>log_read_text</code> は、初期設定ではオフです。</dd></div>
+    <div><dt><code>max_queue</code> / <code>max_text_len</code></dt><dd>読み上げ待ちの上限と、1つの発言で読む最大文字数です。</dd></div>
+  </dl>
+  <h3>BOT を2つ動かす</h3>
+  <p>同じ VC 以外でも同時に読み上げたいときは、BOT を2つ作ります。プログラムを別のフォルダにコピーするか、<code>python MultiTTSBOT.py config_bot2.txt</code> のように設定ファイルを分けます。</p>
+  <ul class="notes">
+    <li><code>token_file</code> と <code>data_dir</code> は BOT ごとに分けてください。</li>
+    <li>声の設定と辞書を共有するなら、両方の <code>shared_dir</code> に同じフォルダを指定します。</li>
+    <li>CeVIO は同時に1つのアプリしか接続できないので、片方の BOT だけで使ってください。</li>
+  </ul>
+</section>
+
+<section id="trouble">
+  <h2>困ったとき</h2>
+  <details>
+    <summary>「トークンがありません」と出る</summary>
+    <p><code>token.txt</code> がプログラムと同じフォルダにあるか確認してください。メモ帳の設定によって <code>token.txt.txt</code> になっていることがあります。</p>
+  </details>
+  <details>
+    <summary>コマンドが Discord に出てこない</summary>
+    <p>招待するときに <code>applications.commands</code> を選んだか確認してください。起動したあと、反映まで少し時間がかかることがあります。Discord を再読み込み（Ctrl + R）すると出ることもあります。</p>
+  </details>
+  <details>
+    <summary>VC に入るのに、声が出ない</summary>
+    <p>FFmpeg の PATH が通っているか、エンジンが起動しているかを確認してください。エンジンの状態は <code>/status</code> で見られます。</p>
+  </details>
+  <details>
+    <summary>発言を読まない</summary>
+    <p>Developer Portal で Message Content Intent がオンになっているか確認してください。発言する人が BOT と同じ VC にいることも必要です。</p>
+  </details>
+  <details>
+    <summary>原因がわからない</summary>
+    <p>BOT の画面と、<code>logs</code> フォルダの <code>bot.log</code> にエラーが残ります。<a href="https://github.com/NeMqki/astralbot-site/issues">お問い合わせ</a>するときは、トークンや名前が写っていないことを確認してから送ってください。</p>
+  </details>
+</section>
+
+<section id="update">
+  <h2>新しい版に更新する</h2>
+  <p>BOT を止めて、新しい <code>MultiTTSBOT.py</code> で置き換えます。<code>config.txt</code> や <code>user_settings.json</code> はそのまま残してください。変更点は<a href="https://github.com/NeMqki/MultiTTSBOT/blob/main/patch_notes.md">パッチノート</a>にあります。</p>
+</section>
+
+<section id="safety">
+  <h2>注意</h2>
+  <ul>
+    <li><b>トークンは絶対に人に見せないでください。</b>知られると BOT を乗っ取られます。漏れたときは、すぐに「Reset Token」で作り直してください。</li>
+    <li><code>user_settings.json</code>、<code>dictionary.json</code>、<code>logs</code> フォルダには、ユーザーID や名前が入ります。公開しないでください。</li>
+    <li>発言の読み上げのために、メッセージの本文を BOT が受け取ります。ほかの人のサーバーで動かすときは、そのことを伝えてください。</li>
+    <li>音声エンジンとキャラクターの利用規約とクレジット表記は、動かす人の責任で守ってください。VOICEVOX は「VOICEVOX:キャラクター名」の表記が必要です。</li>
+    <li>プログラムは <a href="https://github.com/NeMqki/MultiTTSBOT/blob/main/LICENSE">MIT ライセンス</a>です。音声エンジンや音声ライブラリは含まれていません。</li>
+  </ul>
+</section>
+</main>
+</body>
+</html>
